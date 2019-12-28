@@ -520,9 +520,19 @@ class Ruby::Signature::TypeParsingTest < Minitest::Test
       assert_equal "hello world", type.literal
     end
 
-    Parser.parse_type("\"super \\\" duper\"").yield_self do |type|
+    Parser.parse_type('"super \" duper"').yield_self do |type|
       assert_instance_of Types::Literal, type
-      assert_equal "super \" duper", type.literal
+      assert_equal 'super " duper', type.literal
+    end
+
+    Parser.parse_type('"\n"').yield_self do |type|
+      assert_instance_of Types::Literal, type
+      assert_equal "\n", type.literal
+    end
+
+    Parser.parse_type(%q['\n']).yield_self do |type|
+      assert_instance_of Types::Literal, type
+      assert_equal '\n', type.literal
     end
   end
 

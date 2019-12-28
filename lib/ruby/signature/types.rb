@@ -920,7 +920,12 @@ module Ruby
         end
 
         def to_s(level = 0)
-          literal.inspect
+          case literal
+          when String
+            literal.dump
+          else
+            literal.inspect
+          end
         end
       end
     end

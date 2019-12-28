@@ -8,6 +8,7 @@ class Ruby::Signature::TypesTest < Minitest::Test
   def test_to_s
     assert_equal "Array[Integer]", parse_type("Array[Integer]").to_s
     assert_equal "Array[Integer]?", parse_type("Array[Integer]?").to_s
+    assert_equal '"\n"', parse_type('"\n"').to_s
     assert_equal '"foo"?', parse_type('"foo" ?').to_s
     assert_equal ":foo ?", parse_type(":foo ?").to_s
     assert_equal "[ Integer, bool? ]", parse_type("[Integer, bool?]").to_s

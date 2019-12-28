@@ -1297,7 +1297,7 @@ def next_token
   when input.scan(/[a-z_]\w*\b/)
     new_token(:tLIDENT)
   when input.scan(/"(\\"|[^"])*"/)
-    s = input.matched.yield_self {|s| s[1, s.length - 2] }.gsub(/\\"/, '"')
+    s = input.matched.undump
     new_token(:tSTRING, s)
   when input.scan(/'(\\'|[^'])*'/)
     s = input.matched.yield_self {|s| s[1, s.length - 2] }.gsub(/\\'/, "'")
