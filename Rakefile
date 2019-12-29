@@ -33,6 +33,7 @@ task :stdlib_test => :parser
 task :build => :parser
 
 namespace :generate do
+  desc 'Generate test file for stdlib'
   task :stdlib_test, [:class] do |_task, args|
     klass = args.fetch(:class) do
       raise "Class name is necessary. e.g. rake 'generate:stdlib_test[String]'"
@@ -58,6 +59,27 @@ namespace :generate do
     RUBY
 
     puts "Created: #{path}"
+  end
+end
+
+task :writer_smoke_test do
+  require 'ruby/signature'
+
+  raise "stdlib/ has changes" unless system('git diff --exit-code --quiet stdlib/')
+
+  begin
+    Pathname.glob('stdlib/**/*.rbs').each do |path|
+      sig = path.read
+      path.open("w") do |f|
+        w = Ruby::Signature::Writer.new(out: f)
+        decls = Ruby::Signature::Parser.parse_signature(sig)
+        w.write(decls)
+      end
+    end
+
+    sh "ruby bin/test_runner.rb"
+  ensure
+    sh 'git checkout stdlib/'
   end
 end
 

@@ -7,3 +7,6 @@ rvm:
   - 2.7.0
   - ruby-head
 before_install: gem install bundler -v 2.0.1
+script:
+  - rake
+  - rake writer_smoke_test
