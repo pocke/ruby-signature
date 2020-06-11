@@ -1,6 +1,8 @@
 module RBS
   module Prototype
     class Runtime
+      include MethodTypeExtractable
+
       attr_reader :patterns
       attr_reader :env
       attr_reader :merge
@@ -69,8 +71,6 @@ module RBS
       end
 
       def method_type(method)
-        untyped = Types::Bases::Any.new(location: nil)
-
         required_positionals = []
         optional_positionals = []
         rest = nil
@@ -107,6 +107,13 @@ module RBS
           end
         end
 
+        begin
+          node = RubyVM::AbstractSyntaxTree.of(method)
+          return_type = function_return_type_from_body(node)
+        rescue Errno::ENOENT
+          return_type = untyped
+        end
+
         method_type = Types::Function.new(
           required_positionals: required_positionals,
           optional_positionals: optional_positionals,
@@ -115,7 +122,7 @@ module RBS
           required_keywords: required_keywords,
           optional_keywords: optional_keywords,
           rest_keywords: rest_keywords,
-          return_type: untyped
+          return_type: return_type
         )
 
         MethodType.new(

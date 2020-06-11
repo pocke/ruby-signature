@@ -47,19 +47,19 @@ end
 class RBS::RuntimePrototypeTest::TestTargets::Test < String
   include Foo
 
-  def self.b: () -> untyped
+  def self.b: () -> nil
 
-  def self.baz: () ?{ (*untyped) -> untyped } -> untyped
+  def self.baz: () ?{ (*untyped) -> untyped } -> nil
 
   public
 
   alias bar foo
 
-  def foo: (untyped foo, ?untyped bar, *untyped baz, untyped a, b: untyped, ?c: untyped, **untyped) -> untyped
+  def foo: (untyped foo, ?untyped bar, *untyped baz, untyped a, b: untyped, ?c: untyped, **untyped) -> nil
 
   private
 
-  def a: () -> untyped
+  def a: () -> nil
 end
 
 RBS::RuntimePrototypeTest::TestTargets::Test::NAME: String
@@ -92,7 +92,7 @@ end
 class RBS::RuntimePrototypeTest::TestTargets::Test < String
   include Foo
 
-  def self.b: () -> untyped
+  def self.b: () -> nil
 
   def self.baz: () -> void
 
@@ -105,7 +105,7 @@ class RBS::RuntimePrototypeTest::TestTargets::Test < String
 
   private
 
-  def a: () -> untyped
+  def a: () -> nil
 end
 
 RBS::RuntimePrototypeTest::TestTargets::Test::NAME: String
@@ -135,21 +135,21 @@ RBS::RuntimePrototypeTest::TestTargets::Test::NAME: String
 
         assert_write p.decls, <<-EOF
 class RBS::RuntimePrototypeTest::IncludeTests::ChildClass < RBS::RuntimePrototypeTest::IncludeTests::SuperClass
-  def self.foo: () -> untyped
+  def self.foo: () -> nil
 
   public
 
-  def bar: () -> untyped
+  def bar: () -> nil
 
-  def foo: () -> untyped
+  def foo: () -> nil
 end
 
 class RBS::RuntimePrototypeTest::IncludeTests::SuperClass
-  def self.foo: () -> untyped
+  def self.foo: () -> nil
 
   public
 
-  def foo: () -> untyped
+  def foo: () -> nil
 end
         EOF
       end
