@@ -49,7 +49,7 @@ class RBS::RuntimePrototypeTest::TestTargets::Test < String
 
   def self.b: () -> untyped
 
-  def self.baz: () { (*untyped) -> untyped } -> untyped
+  def self.baz: () ?{ (*untyped) -> untyped } -> untyped
 
   public
 

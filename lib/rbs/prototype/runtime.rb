@@ -102,7 +102,7 @@ module RBS
           when :block
             block = MethodType::Block.new(
               type: Types::Function.empty(untyped).update(rest_positionals: Types::Function::Param.new(name: nil, type: untyped)),
-              required: true
+              required: false
             )
           end
         end

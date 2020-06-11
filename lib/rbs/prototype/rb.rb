@@ -442,7 +442,7 @@ module RBS
 
         if block
           method_block = MethodType::Block.new(
-            required: true,
+            required: false,
             type: Types::Function.empty(untyped)
           )
         end
@@ -450,7 +450,7 @@ module RBS
         if body_node
           if (yields = any_node?(body_node) {|n| n.type == :YIELD })
             method_block = MethodType::Block.new(
-              required: true,
+              required: false,
               type: Types::Function.empty(untyped)
             )
 
