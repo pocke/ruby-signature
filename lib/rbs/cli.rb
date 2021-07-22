@@ -845,7 +845,7 @@ EOB
 
     def run_collection(args, options)
       _argv, params = parse_collection_options(args)
-      config_path = params[:config]
+      config_path = options.config_path or raise
       lock_path = Collection::Config.to_lockfile_path(config_path)
 
       case args[0]
@@ -890,10 +890,9 @@ EOB
 
     def parse_collection_options(args)
       opts = OptionParser.new do |opts|
-        opts.on("--config PATH")
         opts.on('--frozen') if args[0] == 'install'
       end
-      params = { config: Collection::Config::PATH }
+      params = {}
       return opts.order(args[1..], into: params), params
     end
   end
